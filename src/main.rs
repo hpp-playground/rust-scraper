@@ -1,8 +1,3 @@
-#[macro_use]
-extern crate serde_derive;
-extern crate serde;
-extern crate serde_json;
-
 extern crate regex;
 
 use regex::Regex;
@@ -15,7 +10,7 @@ async fn main() -> Result<(), reqwest::Error> {
 
     let res = reqwest::get("http://aoj-icpc.ichyo.jp/").await?;
 
-    println!("Status: {}", res.status());
+    println!("{{\n\"AOJ-ICPCProblemIds\":");
 
     let html = res.text().await?;
     let document = Html::parse_document(&html);
@@ -43,6 +38,8 @@ async fn main() -> Result<(), reqwest::Error> {
         .into_iter()
         .collect::<Vec<String>>();
     println!("{:?}", uniq);
+
+    println!("}}");
 
     Ok(())
 }
