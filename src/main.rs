@@ -5,11 +5,9 @@ extern crate serde_json;
 
 extern crate regex;
 
-use std::collections::HashSet;
-
 use regex::Regex;
-
 use scraper::{Html, Selector};
+use std::collections::HashSet;
 
 #[tokio::main]
 async fn main() -> Result<(), reqwest::Error> {
@@ -34,14 +32,11 @@ async fn main() -> Result<(), reqwest::Error> {
                 Some(ret) => {
                     stack.push((&ret[1]).to_string());
                 }
-                None => {
-                    println!("{:?}", caps);
-                }
+                None => {}
             }
         }
     }
 
-    println!("{:?}", stack);
     let uniq = stack
         .into_iter()
         .collect::<HashSet<String>>()
